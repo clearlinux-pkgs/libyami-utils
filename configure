@@ -1,0 +1,5 @@
+--disable-avformat
+--disable-v4l2
+--disable-md5
+--enable-x11
+--enable-dmabuf
