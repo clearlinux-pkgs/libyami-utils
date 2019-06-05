@@ -4,7 +4,7 @@
 #
 Name     : libyami-utils
 Version  : 1.3.1
-Release  : 3
+Release  : 4
 URL      : https://github.com/intel/libyami-utils/archive/1.3.1.tar.gz
 Source0  : https://github.com/intel/libyami-utils/archive/1.3.1.tar.gz
 Summary  : No detailed summary available
