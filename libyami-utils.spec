@@ -4,7 +4,7 @@
 #
 Name     : libyami-utils
 Version  : 1.3.1
-Release  : 4
+Release  : 5
 URL      : https://github.com/intel/libyami-utils/archive/1.3.1.tar.gz
 Source0  : https://github.com/intel/libyami-utils/archive/1.3.1.tar.gz
 Summary  : No detailed summary available
@@ -31,7 +31,6 @@ Applications and Scripts for libyami.
 Summary: bin components for the libyami-utils package.
 Group: Binaries
 Requires: libyami-utils-license = %{version}-%{release}
-Requires: libyami-utils-man = %{version}-%{release}
 
 %description bin
 bin components for the libyami-utils package.
@@ -55,13 +54,22 @@ man components for the libyami-utils package.
 
 %prep
 %setup -q -n libyami-utils-1.3.1
+cd %{_builddir}/libyami-utils-1.3.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1542230921
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604353764
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %autogen --disable-static --disable-avformat \
 --disable-v4l2 \
 --disable-md5 \
@@ -70,17 +78,17 @@ export SOURCE_DATE_EPOCH=1542230921
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1542230921
+export SOURCE_DATE_EPOCH=1604353764
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libyami-utils
-cp LICENSE %{buildroot}/usr/share/package-licenses/libyami-utils/LICENSE
+cp %{_builddir}/libyami-utils-1.3.1/LICENSE %{buildroot}/usr/share/package-licenses/libyami-utils/92170cdc034b2ff819323ff670d3b7266c8bffcd
 %make_install
 
 %files
@@ -98,11 +106,11 @@ cp LICENSE %{buildroot}/usr/share/package-licenses/libyami-utils/LICENSE
 /usr/bin/yamivpp
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/package-licenses/libyami-utils/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libyami-utils/92170cdc034b2ff819323ff670d3b7266c8bffcd
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/yamidecode.1
 /usr/share/man/man1/yamiencode.1
 /usr/share/man/man1/yamiinfo.1
